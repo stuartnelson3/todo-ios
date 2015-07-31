@@ -18,5 +18,6 @@
 @property NSDate *dueDate;
 
 - (ToDoItem *)initWithText:(NSString *)text;
+- (int)daysUntilDue;
 
 @end

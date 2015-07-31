@@ -23,4 +23,9 @@
     return self;
 }
 
+- (int)daysUntilDue {    
+    NSTimeInterval seconds = [self.dueDate timeIntervalSinceDate: [NSDate date]];
+    return (int)seconds / (60*60*24);
+}
+
 @end

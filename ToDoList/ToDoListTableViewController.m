@@ -86,19 +86,17 @@
     cell.textLabel.text = item.itemName;
     
     if (item.dueDate) {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"MM/dd/yyyy"];
-        NSString *dateString = [dateFormat stringFromDate:item.dueDate];
         
         NSDate *today = [NSDate date];
-        
         // Find today's day of the month and the due day's day of the month. A to-do could be within
         // 24 hours of the due date, but still separated by calendar date.
         NSInteger todayDay = [[[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:today] day];
         NSInteger itemDay = [[[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:item.dueDate] day];
-
-        NSTimeInterval seconds = [item.dueDate timeIntervalSinceDate: today];
-        int days = (int)seconds / (60*60*24);
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"MM/dd/yyyy"];
+        NSString *dateString = [dateFormat stringFromDate:item.dueDate];
+        int days = item.daysUntilDue;
         
         if (days < 1 && (todayDay == itemDay)) {
             dateString = [dateString stringByAppendingString:@" (Due today)"];
