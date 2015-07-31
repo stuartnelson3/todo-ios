@@ -21,7 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
+    NSDate *today = [NSDate date];
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    [datePicker setMinimumDate:today];
     [datePicker setDatePickerMode:UIDatePickerModeDate];
     
     // Toolbar displaying "done" above UIDatePicker.
@@ -41,6 +43,13 @@
     
     [datePicker addTarget:self action:@selector(dateTextField:) forControlEvents:UIControlEventValueChanged];
     [self.dueDate setInputView:datePicker];
+    
+    // Set initial selection to tomorrow.
+    // TODO: Why can't I call dateTextField?
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM/dd/yyyy"];
+    self.dueDate.text =[dateFormat stringFromDate:[today dateByAddingTimeInterval:60*60*24]];
+    
     // Do any additional setup after loading the view.
 }
 
