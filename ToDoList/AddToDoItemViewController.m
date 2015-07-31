@@ -35,7 +35,7 @@
                                                            initWithTitle:@"Done"
                                                            style:UIBarButtonItemStyleDone
                                                            target:self.dueDate
-                                                           action:@selector(resignFirstResponder)],nil ] animated:YES];
+                                                           action:@selector(resignFirstResponder)], nil] animated:YES];
     
     [self.dueDate setInputAccessoryView:doneBar];
     
@@ -48,10 +48,10 @@
     UIDatePicker *picker = (UIDatePicker*)self.dueDate.inputView;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     self.actualDueDate = picker.date;
-    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
     NSString *dateString = [dateFormat stringFromDate:self.actualDueDate];
-    self.dueDate.text = [NSString stringWithFormat:@"%@",dateString];
+    self.dueDate.text = dateString;
 }
 
 - (void)didReceiveMemoryWarning {

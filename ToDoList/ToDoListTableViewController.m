@@ -19,9 +19,15 @@
 @implementation ToDoListTableViewController
 
 - (void)loadInitialData {
+    NSDate *date = [NSDate date];
     ToDoItem *item1 = [[ToDoItem alloc] initWithText: @"Buy milk"];
+    item1.dueDate = date;
     ToDoItem *item2 = [[ToDoItem alloc] initWithText: @"Learn German"];
+    int daysToAdd = 1;
+    item2.dueDate = [date dateByAddingTimeInterval:60*60*24*daysToAdd];
     ToDoItem *item3 = [[ToDoItem alloc] initWithText: @"Become a mobile dev" ];
+    daysToAdd = 4;
+    item3.dueDate = [date dateByAddingTimeInterval:60*60*24*daysToAdd];
     
     [self.toDoItems addObject:item1];
     [self.toDoItems addObject:item2];
@@ -78,8 +84,32 @@
     ToDoItem *item = [self.toDoItems objectAtIndex:indexPath.row];
     
     cell.textLabel.text = item.itemName;
+    
     if (item.dueDate) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", item.itemName, item.dueDate];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"MM/dd/yyyy"];
+        NSString *dateString = [dateFormat stringFromDate:item.dueDate];
+        
+        NSDate *today = [NSDate date];
+        
+        // Find today's day of the month and the due day's day of the month. A to-do could be within
+        // 24 hours of the due date, but still separated by calendar date.
+        NSInteger todayDay = [[[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:today] day];
+        NSInteger itemDay = [[[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:item.dueDate] day];
+
+        NSTimeInterval seconds = [item.dueDate timeIntervalSinceDate: today];
+        int days = (int)seconds / (60*60*24);
+        
+        if (days < 1 && (todayDay == itemDay)) {
+            dateString = [dateString stringByAppendingString:@" (Due today)"];
+        } else if (days < 2) {
+            dateString = [dateString stringByAppendingString:@" (Due tomorrow)"];
+        } else {
+            NSString *daysLeft = [NSString stringWithFormat:@" (in %d days)", days];
+            dateString = [dateString stringByAppendingString:daysLeft];
+        }
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", item.itemName, dateString];
     }
 
 
