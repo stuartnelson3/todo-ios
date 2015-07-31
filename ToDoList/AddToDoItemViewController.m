@@ -47,6 +47,8 @@
     // Set initial selection to tomorrow.
     datePicker.date = [today dateByAddingTimeInterval:60*60*24];
     [self dateTextField:nil];
+    // Reset dueDate text to blank.
+    self.dueDate.text = @"";
     
     // Do any additional setup after loading the view.
 }
