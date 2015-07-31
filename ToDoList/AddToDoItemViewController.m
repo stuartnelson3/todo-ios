@@ -26,7 +26,7 @@
     
     // Toolbar displaying "done" above UIDatePicker.
     UIToolbar *doneBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [doneBar setBarStyle:UIBarStyleBlackTranslucent];
+    [doneBar setBarStyle:UIBarStyleDefault];
     UIBarButtonItem *spacer2 = [[UIBarButtonItem alloc]
                                 initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                 target:nil
