@@ -45,10 +45,8 @@
     [self.dueDate setInputView:datePicker];
     
     // Set initial selection to tomorrow.
-    // TODO: Why can't I call dateTextField?
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    self.dueDate.text =[dateFormat stringFromDate:[today dateByAddingTimeInterval:60*60*24]];
+    datePicker.date = [today dateByAddingTimeInterval:60*60*24];
+    [self dateTextField:nil];
     
     // Do any additional setup after loading the view.
 }
